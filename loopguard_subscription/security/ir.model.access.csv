@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_loopguard_case_user,loopguard.rescue.case user,model_loopguard_rescue_case,base.group_user,1,1,1,0

@@ -1,0 +1,99 @@
+<odoo>
+    <record id="loopguard_rescue_case_list" model="ir.ui.view">
+        <field name="name">loopguard.rescue.case.list</field>
+        <field name="model">loopguard.rescue.case</field>
+        <field name="arch" type="xml">
+            <list string="Renewal Rescue" default_order="risk_score desc, next_action_date asc" decoration-danger="risk_level == 'critical'" decoration-warning="risk_level == 'high'">
+                <field name="risk_level" widget="badge"/>
+                <field name="risk_score" string="Risk"/>
+                <field name="partner_id"/>
+                <field name="subscription_id" string="Subscription"/>
+                <field name="recurring_value" sum="At risk"/>
+                <field name="overdue_amount" sum="Overdue"/>
+                <field name="risk_reasons" optional="show"/>
+                <field name="next_action" optional="show"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="next_action_date"/>
+                <field name="stage" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="loopguard_rescue_case_search" model="ir.ui.view">
+        <field name="name">loopguard.rescue.case.search</field>
+        <field name="model">loopguard.rescue.case</field>
+        <field name="arch" type="xml">
+            <search string="Search renewal risk">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="subscription_id"/>
+                <field name="owner_id"/>
+                <filter name="critical" string="Critical" domain="[('risk_level', '=', 'critical')]"/>
+                <filter name="high" string="High risk" domain="[('risk_level', '=', 'high')]"/>
+                <filter name="open" string="Open cases" domain="[('stage', 'in', ['new', 'working'])]"/>
+                <filter name="overdue" string="Has overdue amount" domain="[('overdue_amount', '&gt;', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_risk" string="Risk level" context="{'group_by': 'risk_level'}"/>
+                    <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_stage" string="Stage" context="{'group_by': 'stage'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="loopguard_rescue_case_form" model="ir.ui.view">
+        <field name="name">loopguard.rescue.case.form</field>
+        <field name="model">loopguard.rescue.case</field>
+        <field name="arch" type="xml">
+            <form string="Renewal Rescue Case">
+                <header>
+                    <button name="action_open_subscription" type="object" string="Open subscription" class="oe_highlight"/>
+                    <button name="action_start_work" type="object" string="Start follow-up" invisible="stage != 'new'"/>
+                    <button name="action_mark_saved" type="object" string="Mark renewed" invisible="stage not in ['new', 'working']"/>
+                    <field name="stage" widget="statusbar" statusbar_visible="new,working,saved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group string="Customer and contract">
+                            <field name="subscription_id"/>
+                            <field name="partner_id"/>
+                            <field name="recurring_value"/>
+                            <field name="subscription_state"/>
+                        </group>
+                        <group string="Renewal signal">
+                            <field name="risk_level" widget="badge"/>
+                            <field name="risk_score"/>
+                            <field name="overdue_amount"/>
+                            <field name="next_action_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="risk_reasons"/>
+                        <field name="next_action"/>
+                    </group>
+                    <group>
+                        <field name="owner_id"/>
+                        <field name="last_scanned_at"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="loopguard_rescue_case_action" model="ir.actions.act_window">
+        <field name="name">Renewal Rescue</field>
+        <field name="res_model">loopguard.rescue.case</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="loopguard_rescue_case_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No subscriptions need a rescue right now.</p>
+            <p>LoopGuard scans active contracts daily and ranks the cases that need attention.</p>
+        </field>
+    </record>
+
+    <menuitem id="loopguard_menu_root" name="LoopGuard" sequence="36" groups="base.group_user"/>
+    <menuitem id="loopguard_menu_rescue" name="Renewal Rescue" parent="loopguard_menu_root" action="loopguard_rescue_case_action" sequence="10" groups="base.group_user"/>
+</odoo>

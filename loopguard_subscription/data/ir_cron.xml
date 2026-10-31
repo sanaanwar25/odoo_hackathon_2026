@@ -1,0 +1,11 @@
+<odoo>
+    <record id="ir_cron_loopguard_scan" model="ir.cron">
+        <field name="name">LoopGuard: scan subscription renewal risk</field>
+        <field name="model_id" ref="model_loopguard_rescue_case"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_scan_subscriptions()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>
