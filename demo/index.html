@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8f6">
+  <title>LoopGuard — Revenue operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="LoopGuard home"><span class="brand-mark"><i></i><i></i><i></i></span><span>loopguard<span class="brand-dot">.</span></span></a>
+      <div class="workspace-switch"><span class="workspace-icon">B</span><span><b>Brightloop</b><small>Revenue team</small></span><span class="chevron">⌄</span></div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="#dashboard" data-page="dashboard"><span class="nav-icon">◫</span>Overview</a>
+        <a href="#subscriptions" data-page="subscriptions"><span class="nav-icon">↻</span>Subscriptions<span class="nav-count" id="subCount"></span></a>
+        <a href="#renewals" data-page="renewals"><span class="nav-icon">⌁</span>Renewal radar<span class="nav-alert" id="riskCount"></span></a>
+        <a href="#invoices" data-page="invoices"><span class="nav-icon">▤</span>Invoices<span class="nav-count" id="invoiceCount"></span></a>
+        <a href="#customers" data-page="customers"><span class="nav-icon">♙</span>Customers</a>
+      </nav>
+      <div class="nav-label nav-label-spaced">REVENUE ENGINE</div>
+      <nav>
+        <a href="#products" data-page="products"><span class="nav-icon">◇</span>Products &amp; plans</a>
+        <a href="#discounts" data-page="discounts"><span class="nav-icon">%</span>Discounts</a>
+        <a href="#payments" data-page="payments"><span class="nav-icon">⇢</span>Payments</a>
+        <a href="#reports" data-page="reports"><span class="nav-icon">▥</span>Reports</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="health-card"><div class="health-top"><span class="health-pulse"></span>Billing engine <b>Healthy</b></div><small>Last cycle completed · 08:42</small><div class="health-line"><i></i></div><div class="health-foot"><span>98.6% collected</span><span>↗ 2.4%</span></div></div>
+        <a href="#settings" data-page="settings" class="settings-link"><span class="nav-icon">⚙</span>Settings</a>
+        <button class="profile-button" id="profileButton"><span class="avatar avatar-dark">AM</span><span><b id="profileName">Amina Malik</b><small id="profileRole">Administrator</small></span><span class="chevron">···</span></button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar"><div class="breadcrumbs"><span>Brightloop</span><span class="crumb-slash">/</span><b id="breadcrumbCurrent">Overview</b></div><div class="top-actions"><div class="date-pill"><span>◷</span> Oct 2026 <span class="chevron">⌄</span></div><button class="icon-button" id="notificationButton" aria-label="Notifications">♧<i></i></button><button class="help-button">? <span>Help</span></button></div></header>
+      <section id="viewRoot" class="view-root" aria-live="polite"></section>
+    </main>
+  </div>
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
